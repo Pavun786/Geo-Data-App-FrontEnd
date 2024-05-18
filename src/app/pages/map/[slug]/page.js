@@ -5,7 +5,7 @@ import axios from 'axios';
 import mapboxgl from 'mapbox-gl';
 import Link from 'next/link';
 import 'mapbox-gl/dist/mapbox-gl.css';
-import {API} from '../../Global'
+import {API} from '../../../Global'
 
 mapboxgl.accessToken = process.env.ACCESS_KEY;
 
