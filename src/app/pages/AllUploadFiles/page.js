@@ -4,13 +4,16 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Link from 'next/link';
+import "../styles/globals.css"
+import Paper from '@mui/material/Paper';
+import {API} from '../../Global'
 
 const FilesList = () => {
   const [files, setFiles] = useState([]);
 
   useEffect(() => {
     const fetchFiles = async () => {
-      const response = await axios.get('http://localhost:3001/files');
+      const response = await axios.get(`${API}/route/files`);
       setFiles(response.data);
     };
     fetchFiles();
@@ -18,24 +21,22 @@ const FilesList = () => {
 
   return (
     <div>
-      <nav>
-        <Link href="/">Home</Link>
-        <Link href="/upload">Upload Files</Link>
-        <Link href="/files">View Files</Link>
-      </nav>
       <main>
         <h1>Files List</h1>
         <ul>
-          {files.map((file) => (
+          {files.map((file,index) => (
+          <Paper elevation={10} className='paper'>
             <li key={file._id}>
-              <Link href={`/pages/map/${file._id}`}>
-                {file.filename}
+              <Link className='link' href={`/pages/map/${file._id}`}>
+                {index+1}. {file.filename}
               </Link>
+
             </li>
+            </Paper>
           ))}
         </ul>
       </main>
-      <footer>© 2024 My Geo-Data App</footer>
+      
     </div>
   );
 };

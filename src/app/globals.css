@@ -1,4 +1,4 @@
-@tailwind base;
+/* @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
@@ -30,4 +30,10 @@ body {
   .text-balance {
     text-wrap: balance;
   }
+} */
+
+.Home-container{
+  background-image: url("https://cdn.pixabay.com/photo/2014/04/02/14/09/world-map-306338_640.png");
+  background-color: aqua;
+  height : 100vh;
 }

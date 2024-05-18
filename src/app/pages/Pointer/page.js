@@ -1,12 +1,13 @@
-// components/Map.js
-
 'use client'
 import React, { useEffect, useRef, useState } from 'react';
 import mapboxgl from 'mapbox-gl';
 import MapboxDraw from '@mapbox/mapbox-gl-draw';
 import axios from 'axios';
+import Link from 'next/link';
+import "../styles/globals.css"
+import {API} from '../../Global'
 
-mapboxgl.accessToken = 'pk.eyJ1IjoicGF2dW43ODYiLCJhIjoiY2x3OHNjOTJsMmhtczJqcGhqbng2MmNoaSJ9.Hh17KzDoz_MzG6DC3DQdzw';
+mapboxgl.accessToken = process.env.ACCESS_KEY;
 
 const Map = () => {
   const mapContainerRef = useRef(null);
@@ -17,7 +18,7 @@ const Map = () => {
 
   useEffect(() => {
     const fetchMarkers = async () => {
-      const response = await axios.get('http://localhost:3001/markers');
+      const response = await axios.get(`${API}/route/markers`);
       setMarkers(response.data);
     };
 
@@ -71,25 +72,25 @@ const Map = () => {
   async function updateMarkers(e) {
     if (e.type === 'draw.create') {
       const newMarker = e.features[0];
-      console.log(newMarker)
-      await axios.post('http://localhost:3001/markers', newMarker);
+      newMarker.properties.id = newMarker.id; // Ensure the marker has an ID property
+      await axios.post(`${API}/route/markers`, newMarker);
     } else if (e.type === 'draw.delete') {
       const deletedMarkerId = e.features[0].properties.id;
-      await axios.delete(`http://localhost:3001/markers/${deletedMarkerId}`);
+      await axios.delete(`${API}/route/markers/${deletedMarkerId}`);
     } else if (e.type === 'draw.update') {
       const updatedMarker = e.features[0];
-      await axios.put(`http://localhost:3001/markers/${updatedMarker.properties.id}`, updatedMarker);
+      await axios.put(`${API}/route/markers/${updatedMarker.properties.id}`, updatedMarker);
     }
 
-    const response = await axios.get('http://localhost:3001/markers');
+    const response = await axios.get(`${API}/route/markers`);
     setMarkers(response.data);
   }
 
   const handleSave = async () => {
     if (selectedMarker) {
       const updatedMarker = { ...selectedMarker };
-      await axios.put(`http://localhost:3001/markers/${updatedMarker.properties.id}`, updatedMarker);
-      const response = await axios.get('http://localhost:3001/markers');
+      await axios.put(`${API}/route/markers/${updatedMarker.properties.id}`, updatedMarker);
+      const response = await axios.get(`${API}/route/markers`);
       setMarkers(response.data);
     }
   };
@@ -97,9 +98,9 @@ const Map = () => {
   const handleDelete = async () => {
     if (selectedMarker) {
       const markerId = selectedMarker.properties.id;
-      await axios.delete(`http://localhost:3001/markers/${markerId}`);
+      await axios.delete(`${API}/route/markers/${markerId}`);
       setSelectedMarker(null);
-      const response = await axios.get('http://localhost:3001/markers');
+      const response = await axios.get(`${API}/route/markers`);
       setMarkers(response.data);
     }
   };
@@ -108,11 +109,12 @@ const Map = () => {
     <div>
       <div ref={mapContainerRef} style={{ width: '100%', height: '500px' }} />
       <div style={{ marginTop: '10px' }}>
-        <button onClick={handleSave} disabled={!selectedMarker}>Save Marker</button>
-        <button onClick={handleDelete} disabled={!selectedMarker}>Delete Marker</button>
+        <button onClick={handleSave} >Save Marker</button>
+        <button onClick={handleDelete} >Delete Marker</button>
       </div>
     </div>
   );
 };
 
 export default Map;
+

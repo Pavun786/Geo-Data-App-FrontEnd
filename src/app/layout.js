@@ -1,5 +1,7 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
+import NavBar from "../app/pages/NavBar/page"
+
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,7 +17,10 @@ export default function RootLayout({ children }) {
       <link href="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.css" rel="stylesheet"></link>
       <script src="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.js"></script>
       </head>
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <NavBar/>
+        {children}
+        </body>
     </html>
   );
 }

@@ -3,6 +3,7 @@ body {
     padding: 0;
     box-sizing: border-box;
     font-family: Arial, sans-serif;
+    height: 100vh;
   }
   
   #__next {
@@ -34,3 +35,56 @@ body {
     color: white;
   }
   
+
+  .upload-container{
+    height: 100vh;
+    background-color: aqua;
+  }
+
+  /* .home-container{
+    background-image: url("https://cdn.pixabay.com/photo/2014/04/02/14/09/world-map-306338_640.png");
+    background-color: aqua;
+  } */
+
+  Link{
+    text-decoration: none;
+  }
+
+  .register-container{
+    display:flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    margin: auto ;
+    width: 300px;
+    gap: 20px;
+  }
+  .register{
+    text-align: center;
+  }
+
+  .paper{
+
+     padding: 20px;
+     margin: 10px;
+     width: fit-content;
+
+  }
+
+  .link{
+    text-decoration: none;
+    color: blue;
+    font-size: 20px;
+
+  }
+
+  ul,li{
+    list-style-type: none;
+  }
+
+  .log-btn{
+    float: right;
+  }
+
+  .btn{
+    color: whitesmoke;
+  }
