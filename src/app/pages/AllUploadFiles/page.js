@@ -25,8 +25,8 @@ const FilesList = () => {
         <h1>Files List</h1>
         <ul>
           {files.map((file,index) => (
-          <Paper elevation={10} className='paper'>
-            <li key={file._id}>
+          <Paper elevation={10} className='paper' key={file._id}>
+            <li >
               <Link className='link' href={`/pages/map/${file._id}`}>
                 {index+1}. {file.filename}
               </Link>
