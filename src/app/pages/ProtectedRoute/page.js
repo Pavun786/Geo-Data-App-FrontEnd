@@ -1,25 +1,49 @@
 
-'use client'
+// 'use client'
+// import { useRouter } from 'next/navigation';
+
+//  function ProtectedRoute({children}) {
+
+//     const router = useRouter()
+//     const isAuth = localStorage.getItem("token")
+//     const navigate=()=>{
+//        router.push("/")
+//    }
+//     return (
+//     <>
+//      { isAuth ? children : navigate()}
+//     </>
+//   )
+// }
+// export default ProtectedRoute;
+
+'use client';
 import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
+function ProtectedRoute({ children }) {
+  const router = useRouter();
+  const [isAuthenticated, setIsAuthenticated] = useState(null);
 
- function ProtectedRoute({children}) {
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const token = localStorage.getItem('token');
+      if (token) {
+        setIsAuthenticated(true);
+      } else {
+        router.push('/');
+      }
+    }
+  }, [router]);
 
-    const router = useRouter()
+  if (isAuthenticated === null) {
+    return <p>Loading...</p>;
+  }
 
-   const isAuth = localStorage.getItem("token")
-   
-   const navigate=()=>{
-       router.push("/")
-   }
-    
-  return (
-    <>
-     { isAuth ? children : navigate()}
-    </>
-  )
+  return isAuthenticated ? children : null;
 }
 
 export default ProtectedRoute;
+
 
 

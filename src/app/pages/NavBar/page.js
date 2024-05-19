@@ -1,22 +1,27 @@
-
-"use client"
+'use client';
 import Link from 'next/link';
-import "../styles/globals.css"
+import "../styles/globals.css";
 import { useRouter } from 'next/navigation';
 import { Button } from '@mui/material';
-import ProtectedRoute from '../ProtectedRoute/page';
+import { useState, useEffect } from 'react';
 
 const NavBar = () => {
+  const router = useRouter();
+  const [token, setToken] = useState(null);
 
-    const router = useRouter()
- 
-    const token = localStorage.getItem("token")
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const storedToken = localStorage.getItem('token');
+      setToken(storedToken);
+    }
+  }, []);
 
-    const LoggingOut=()=>{
-  
-        localStorage.clear()
-        router.push("/")
-     }
+  const LoggingOut = () => {
+    if (typeof window !== 'undefined') {
+      localStorage.clear();
+      router.push('/');
+    }
+  };
 
   return (
     <div>
@@ -26,17 +31,16 @@ const NavBar = () => {
         <Link href="/pages/DrawShapes">Draw Shapes</Link>
         <Link href="/pages/Pointer">Make Pointer</Link>
         <Link href="/pages/Distance-Pointes">Distance-Finder</Link>
-       
         <div className='log-btn'>
-        {
-             token ?  <Button onClick={()=>LoggingOut()} className='btn'>
-             Logout
-            </Button> : "Login"
-           } 
-           </div>
+          {token ? (
+            <Button onClick={LoggingOut} className='btn'>
+              Logout
+            </Button>
+          ) : (
+            "Login"
+          )}
+        </div>
       </nav>
-      
-     
     </div>
   );
 };

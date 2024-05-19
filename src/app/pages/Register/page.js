@@ -33,21 +33,29 @@ function Register(){
        onSubmit:async (values)=>{
         console.log(values)
        
-        const signup = await fetch(`${API}/auth/register`,{
-            method:"POST",
-            body:JSON.stringify(values),
-            headers:{"Content-type": "application/json"},
-      
-           })
-           if (signup.status === 500) {
-            alert(signup.message);
-          
-          } else
-           { 
-            const result=await signup.json() 
-            console.log(result)
-            router.push("/")
-           }
+        try {
+            const signup = await fetch(`${API}/auth/register`, {
+              method: "POST",
+              body: JSON.stringify(values),
+              headers: { "Content-type": "application/json" },
+            });
+            
+            if (signup.status !== 200) {
+              const errorResponse = await signup.json();
+              alert(errorResponse.message);
+            } else {
+              const result = await signup.json();
+              console.log(result);
+              if (typeof window !== 'undefined') {
+                localStorage.setItem('token', result.token);
+              }
+              router.push("/");
+            }
+          } catch (error) {
+            console.error('Error during registration:', error);
+            alert('Registration failed, please try again.');
+          }
+           
        }
     });
      

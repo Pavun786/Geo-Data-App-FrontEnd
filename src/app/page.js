@@ -24,6 +24,7 @@ function Login() {
         },
         validationSchema: LoginValidationSchema,
         onSubmit: async (values) => {
+          try {
             const data = await fetch(`${API}/auth/login`, {
                 method: "POST",
                 body: JSON.stringify(values),
@@ -34,9 +35,15 @@ function Login() {
                 alert("Unauthorized");
             } else {
                 const result = await data.json();
-                localStorage.setItem("token", result.token);
+                if (typeof window !== 'undefined') {
+                    localStorage.setItem("token", result.token);
+                }
                 router.push("/pages/upload");
             }
+        } catch (error) {
+            console.error('Error during login:', error);
+            alert('Login failed, please try again.');
+        }
         }
     });
 
