@@ -4,7 +4,7 @@ import mapboxgl from 'mapbox-gl';
 import * as turf from '@turf/turf';
 import {API} from '../../Global'
 
-mapboxgl.accessToken = process.env.ACCESS_KEY;
+mapboxgl.accessToken = "pk.eyJ1IjoicGF2dW43ODYiLCJhIjoiY2x3OHNjOTJsMmhtczJqcGhqbng2MmNoaSJ9.Hh17KzDoz_MzG6DC3DQdzw";
 
 const Mapbox = () => {
     const mapContainer = useRef(null);

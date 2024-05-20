@@ -7,7 +7,7 @@ import Link from 'next/link';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import {API} from '../../../Global'
 
-mapboxgl.accessToken = process.env.ACCESS_KEY;
+mapboxgl.accessToken = "pk.eyJ1IjoicGF2dW43ODYiLCJhIjoiY2x3OHNjOTJsMmhtczJqcGhqbng2MmNoaSJ9.Hh17KzDoz_MzG6DC3DQdzw";
 
 const FilePage = ({params}) => {
  
